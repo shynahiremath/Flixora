@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Netflix — Stream Premium Movies & Series</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/browse.css" />
+</head>
+<body class="bg-zinc-950 text-white min-h-screen flex flex-col antialiased selection:bg-red-600 selection:text-white">
+
+  <!-- GLASS NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/index.html" class="flex items-center gap-2 group">
+        <span class="text-3xl font-black tracking-wider text-red-600 font-mono group-hover:scale-105 transition">NETFLIX</span>
+      </a>
+
+      <!-- Right Nav Controls -->
+      <div class="flex items-center gap-4">
+        <!-- Language Switcher Selector Dropdown -->
+        <div class="relative">
+          <button onclick="toggleLangMenu()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-xs font-bold transition cursor-pointer" title="Switch Language">
+            <span>🌐</span>
+            <span id="current-lang-label">English</span>
+            <span class="text-[10px] text-zinc-400">▼</span>
+          </button>
+          <div id="lang-dropdown-menu" class="hidden absolute right-0 mt-2 w-40 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-2 z-50 animate-fade-in text-xs font-bold space-y-1">
+            <button onclick="setAppLanguage('en')" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-zinc-800 text-zinc-200 transition cursor-pointer">
+              <span>English</span>
+              <span id="check-lang-en" class="text-red-500">✓</span>
+            </button>
+            <button onclick="setAppLanguage('hi')" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-zinc-800 text-zinc-200 transition cursor-pointer">
+              <span>हिंदी (Hindi)</span>
+              <span id="check-lang-hi" class="text-red-500 hidden">✓</span>
+            </button>
+          </div>
+        </div>
+
+        <a href="/login.html" class="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-red-600/30" data-i18n="signin_title">
+          Sign In
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main class="flex-grow pt-24 overflow-x-hidden">
+    <section id="index-hero-section" class="relative min-h-[85vh] flex items-center justify-center overflow-hidden px-6 hero-parallax-wrapper">
+      <!-- Background Video Overlay with Parallax Layer -->
+      <div id="index-bg-parallax" class="absolute inset-0 z-0 hero-parallax-bg">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-40 scale-105 kenburns-bg">
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent"></div>
+        <div class="absolute inset-0 bg-radial from-red-900/10 via-transparent to-transparent"></div>
+      </div>
+
+      <!-- Hero Content with Staggered Entrance Animations & Parallax -->
+      <div id="index-hero-content" class="relative z-10 max-w-4xl text-center space-y-6 my-12 hero-parallax-content">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/20 border border-red-500/30 text-red-400 font-bold text-xs tracking-wider uppercase mb-2 hero-enter-eyebrow">
+          ✨ Original Premium Streaming Experience
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-none hero-enter-title" data-i18n="hero_title">
+          Unlimited Movies, TV Series & <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">Originals.</span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed hero-enter-desc" data-i18n="hero_subtitle">
+          Stream in stunning 4K HDR. Watch anywhere, cancel anytime. Experience cinematic entertainment redefined.
+        </p>
+
+        <!-- CTA Input Box -->
+        <div class="max-w-xl mx-auto pt-4 hero-enter-buttons">
+          <form action="/signup.html" class="flex flex-col sm:flex-row gap-3">
+            <input type="email" placeholder="Enter your email to get started" required class="flex-grow px-5 py-3.5 rounded-xl bg-zinc-900/90 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/30 transition" />
+            <button type="submit" class="px-8 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm uppercase tracking-wider transition transform hover:scale-105 shadow-xl shadow-red-600/40 cursor-pointer whitespace-nowrap">
+              Get Started ›
+            </button>
+          </form>
+          <p class="text-xs text-zinc-500 mt-2 hero-enter-meta">Ready to watch? Enter your email to create or restart your membership.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE HIGHLIGHTS -->
+    <section class="max-w-7xl mx-auto px-6 py-16 border-t border-zinc-900/80">
+      <div id="index-feature-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="landing-card p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-red-600/50 transition duration-300 transform hover:-translate-y-2 shadow-2xl">
+          <div class="w-12 h-12 rounded-xl bg-red-600/20 text-red-500 border border-red-500/30 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-red-600/10">📺</div>
+          <h3 class="text-xl font-bold text-white mb-2">Enjoy on your TV</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Watch on Smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.</p>
+        </div>
+
+        <div class="landing-card p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-red-600/50 transition duration-300 transform hover:-translate-y-2 shadow-2xl">
+          <div class="w-12 h-12 rounded-xl bg-red-600/20 text-red-500 border border-red-500/30 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-red-600/10">⚡</div>
+          <h3 class="text-xl font-bold text-white mb-2">Instant MoodSync</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Feeling happy, energetic, or relaxed? Our smart mood filtering curates the perfect title instantly.</p>
+        </div>
+
+        <div class="landing-card p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-red-600/50 transition duration-300 transform hover:-translate-y-2 shadow-2xl">
+          <div class="w-12 h-12 rounded-xl bg-red-600/20 text-red-500 border border-red-500/30 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-red-600/10">👨‍👩‍👧‍👦</div>
+          <h3 class="text-xl font-bold text-white mb-2">Create Kids Profiles</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Send kids on adventures with their favorite characters in a space made just for them—free with your membership.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="max-w-4xl mx-auto px-6 py-12 border-t border-zinc-900">
+      <h2 class="text-3xl font-black text-center text-white mb-8 tracking-tight">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        <details class="group bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+          <summary class="flex items-center justify-between font-bold text-base text-white">
+            <span>What is Netflix?</span>
+            <span class="transition group-open:rotate-180">▼</span>
+          </summary>
+          <p class="mt-4 text-xs text-zinc-400 leading-relaxed">
+            Netflix is an educational, portfolio-grade streaming frontend application designed to mimic modern commercial OTT platforms with real video playback, watch progress memory, and personalized recommendations.
+          </p>
+        </details>
+
+        <details class="group bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+          <summary class="flex items-center justify-between font-bold text-base text-white">
+            <span>How much does Netflix cost?</span>
+            <span class="transition group-open:rotate-180">▼</span>
+          </summary>
+          <p class="mt-4 text-xs text-zinc-400 leading-relaxed">
+            Watch Netflix on your smartphone, tablet, Smart TV, laptop, or streaming device. Plans range from ₹149 to ₹499 a month (Simulated membership plans). No extra costs, no contracts.
+          </p>
+        </details>
+
+        <details class="group bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+          <summary class="flex items-center justify-between font-bold text-base text-white">
+            <span>Where can I watch?</span>
+            <span class="transition group-open:rotate-180">▼</span>
+          </summary>
+          <p class="mt-4 text-xs text-zinc-400 leading-relaxed">
+            Watch anywhere, anytime. Sign in with your Netflix account to watch instantly on the web from any device with an internet connection.
+          </p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- CINEMATIC FOOTER -->
+  <footer class="bg-zinc-950 border-t border-zinc-900 py-12 text-zinc-500 text-xs">
+    <div class="max-w-7xl mx-auto px-6 space-y-6">
+      <p class="text-zinc-400 font-semibold">Questions? Call 000-800-919-1694</p>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="#" class="hover:underline">FAQ</a>
+        <a href="#" class="hover:underline">Help Center</a>
+        <a href="#" class="hover:underline">Account</a>
+        <a href="#" class="hover:underline">Media Center</a>
+        <a href="#" class="hover:underline">Privacy</a>
+        <a href="#" class="hover:underline">Cookie Preferences</a>
+        <a href="#" class="hover:underline">Terms of Use</a>
+        <a href="#" class="hover:underline">Contact Us</a>
+      </div>
+
+      <div class="pt-6 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p>© 2026 Netflix — Educational Portfolio Project</p>
+        <p class="text-zinc-600 text-[11px]">Created for learning and portfolio demonstration purposes. No copyright infringement intended.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

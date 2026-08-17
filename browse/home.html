@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home — Netflix Streaming Platform</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/browse.css" />
+</head>
+<body class="bg-zinc-950 text-white min-h-screen flex flex-col antialiased selection:bg-red-600 selection:text-white">
+
+  <!-- STICKY NAVBAR -->
+  <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      
+      <!-- Left Logo & Nav Links -->
+      <div class="flex items-center gap-8">
+        <a href="/browse/home.html" class="flex items-center gap-2 group">
+          <span class="text-2xl sm:text-3xl font-black tracking-wider text-red-600 font-mono group-hover:scale-105 transition">NETFLIX</span>
+        </a>
+
+        <!-- Desktop Links -->
+        <div class="hidden md:flex items-center gap-6 text-xs font-bold text-zinc-300 uppercase tracking-wider">
+          <a href="/browse/home.html" class="text-white border-b-2 border-red-600 pb-1" data-i18n="nav_home">Home</a>
+          <a href="/browse/search.html" class="hover:text-white transition" data-i18n="nav_movies">Movies</a>
+          <a href="/browse/search.html" class="hover:text-white transition" data-i18n="nav_series">Series</a>
+          <a href="/browse/search.html" class="hover:text-white transition" data-i18n="nav_new">New & Popular</a>
+          <a href="/browse/mylist.html" class="hover:text-white transition" data-i18n="nav_mylist">My List</a>
+        </div>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Language Switcher Selector Dropdown -->
+        <div class="relative">
+          <button onclick="toggleLangMenu()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 text-xs font-bold transition cursor-pointer" title="Switch Language">
+            <span>🌐</span>
+            <span id="current-lang-label">English</span>
+            <span class="text-[10px] text-zinc-400">▼</span>
+          </button>
+          <div id="lang-dropdown-menu" class="hidden absolute right-0 mt-2 w-40 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-2 z-50 animate-fade-in text-xs font-bold space-y-1">
+            <button onclick="setAppLanguage('en')" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-zinc-800 text-zinc-200 transition cursor-pointer">
+              <span>English</span>
+              <span id="check-lang-en" class="text-red-500">✓</span>
+            </button>
+            <button onclick="setAppLanguage('hi')" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-zinc-800 text-zinc-200 transition cursor-pointer">
+              <span>हिंदी (Hindi)</span>
+              <span id="check-lang-hi" class="text-red-500 hidden">✓</span>
+            </button>
+          </div>
+        </div>
+        <!-- Surprise Me Quick Button -->
+        <button onclick="openSurpriseMeModal()" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/60 text-purple-300 hover:text-white border border-purple-500/30 text-xs font-bold transition cursor-pointer">
+          🎲 Surprise
+        </button>
+
+        <!-- AI Assistant Drawer Button -->
+        <button onclick="toggleAIAssistant()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 text-xs font-bold transition cursor-pointer">
+          ✨ AI Assistant
+        </button>
+
+        <!-- Keyboard Shortcuts Button -->
+        <button onclick="openShortcutsModal()" class="hidden sm:flex p-2 text-zinc-400 hover:text-white transition cursor-pointer" title="Keyboard Shortcuts (?)">
+          ⌨️
+        </button>
+
+        <!-- Search Icon Link -->
+        <a href="/browse/search.html" class="p-2 text-zinc-300 hover:text-white transition" aria-label="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </a>
+
+        <!-- Notification Bell -->
+        <div class="relative">
+          <button id="notif-bell-btn" class="p-2 text-zinc-300 hover:text-white transition relative cursor-pointer" aria-label="Notifications">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+            <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+          </button>
+
+          <!-- Notification Popup Dropdown -->
+          <div id="notif-dropdown" class="hidden absolute right-0 mt-3 w-80 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-4 z-50 animate-fade-in">
+            <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Notifications</h4>
+            <div class="space-y-3 text-xs">
+              <div class="p-2.5 rounded-xl bg-zinc-800/60 border border-zinc-700/50 hover:bg-zinc-800 transition cursor-pointer" onclick="openVideoPlayer('s1')">
+                <span class="text-red-400 font-bold block mb-0.5">NEW RELEASE</span>
+                <p class="text-zinc-200 font-semibold">The Stellar Drift Season 2 is now streaming!</p>
+                <span class="text-[10px] text-zinc-500">2 hours ago</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-zinc-800/60 border border-zinc-700/50 hover:bg-zinc-800 transition cursor-pointer" onclick="openVideoPlayer('m11')">
+                <span class="text-emerald-400 font-bold block mb-0.5">BLOCKBUSTER</span>
+                <p class="text-zinc-200 font-semibold">Kantara: Roar of the Forest is now live in 4K.</p>
+                <span class="text-[10px] text-zinc-500">1 day ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Profile Avatar & Dropdown -->
+        <div class="relative">
+          <button id="profile-menu-btn" class="flex items-center gap-2 cursor-pointer focus:outline-none">
+            <img id="nav-profile-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" alt="Profile" class="w-8 h-8 rounded-lg object-cover border border-white/20 hover:border-red-600 transition" />
+            <span class="text-xs text-zinc-400 hidden sm:inline">▼</span>
+          </button>
+
+          <!-- Profile Dropdown -->
+          <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-3 z-50 animate-fade-in">
+            <div class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider px-2 py-1 mb-1">
+              Signed in as <span data-auth-name class="text-zinc-200 normal-case">...</span>
+            </div>
+            <div id="dropdown-profiles-list" class="space-y-1 mb-3"></div>
+            
+            <div class="pt-2 border-t border-zinc-800 space-y-1 text-xs">
+              <a href="/browse/profile.html" class="block p-2 rounded-lg hover:bg-zinc-800 text-zinc-300 hover:text-white transition">Account & Settings</a>
+              <a href="/browse/mylist.html" class="block p-2 rounded-lg hover:bg-zinc-800 text-zinc-300 hover:text-white transition">My List</a>
+              <button id="nav-logout-btn" class="w-full text-left p-2 rounded-lg hover:bg-red-950/50 text-red-400 hover:text-red-300 transition font-semibold">Sign Out</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Drawer Toggle -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-zinc-300 hover:text-white" aria-label="Toggle Mobile Nav">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobile-nav-drawer" class="hidden md:hidden bg-zinc-950/95 border-b border-zinc-800 px-6 py-4 space-y-3 text-xs font-bold uppercase tracking-wider">
+      <a href="/browse/home.html" class="block text-red-500">Home</a>
+      <a href="/browse/search.html" class="block text-zinc-300">Movies & Series</a>
+      <a href="/browse/mylist.html" class="block text-zinc-300">My List</a>
+      <a href="/browse/profile.html" class="block text-zinc-300">Account & Profile</a>
+    </div>
+  </nav>
+
+  <!-- MAIN HERO & CONTENT ROWS -->
+  <main class="flex-grow">
+    <!-- Featured Hero Banner -->
+    <section id="hero-banner" class="relative min-h-[85vh] flex items-end p-6 md:p-12 pb-16 overflow-hidden">
+      <!-- Dynamically generated in browse.js -->
+    </section>
+
+    <!-- Content Sections Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12">
+      
+      <!-- MoodSync Interactive Recommendation Bar -->
+      <section id="moodsync-container" class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 shadow-2xl">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- "Why This For You?" Row -->
+      <section id="why-this-row-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- Kids & Family Section -->
+      <section id="kids-section-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- "What Can I Watch?" Time Filter -->
+      <section id="time-filter-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- Interactive Genre Explorer with Dynamic Backdrop -->
+      <section id="genre-explorer-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- Indian Cinema Hub -->
+      <section id="indian-cinema-hub-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- Hidden Gems Section -->
+      <section id="hidden-gems-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- Coming Soon & Release Calendar -->
+      <section id="coming-soon-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- Browse by Language -->
+      <section id="language-pills-container">
+        <!-- Dynamically generated in browse.js -->
+      </section>
+
+      <!-- All Category Movie Rows -->
+      <div id="movie-rows-container">
+        <!-- Dynamically generated in browse.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-zinc-950 border-t border-zinc-900 py-12 text-zinc-500 text-xs">
+    <div class="max-w-7xl mx-auto px-6 space-y-4 text-center">
+      <p class="text-zinc-400 font-semibold">Netflix Premium OTT Streaming Platform</p>
+      <p>© 2026 Netflix — Educational Demonstration Project</p>
+    </div>
+  </footer>
+
+  <!-- auth.js MUST load first: it checks the JWT with the backend
+       before the page's real content logic (browse.js) runs -->
+  <script src="/js/auth.js"></script>
+  <script>
+    Auth.requireAuth();
+  </script>
+  <script src="/js/app.js"></script>
+  <script src="/js/browse.js"></script>
+</body>
+</html>

@@ -1,0 +1,572 @@
+/*
+ * FLIXORA - Main Streaming Browse & Dashboard Styles
+ * Authentic Netflix-Style Aesthetics with Multi-Layer Vignettes,
+ * Ken-Burns Background Motion, Custom Card Hovers, and Media Queries.
+ */
+
+/* ==========================================
+ * NETFLIX HERO BANNER & VIGNETTE OVERLAYS
+ * ========================================== */
+
+/* FIX: explicit sizing for the YouTube trailer iframe.
+   The old code relied only on Tailwind arbitrary-value classes
+   (w-[177.78vh], scale-[1.15]) which may not exist in the compiled
+   CSS, causing the iframe to collapse to its default 300x150 size
+   and effectively disappear. This rule guarantees full-bleed cover
+   sizing regardless of whether those Tailwind classes are present. */
+#hero-bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 177.78vh;   /* 16:9 aspect ratio math, so height always covers viewport height */
+  min-width: 100%;
+  height: 100%;
+  min-height: 56.25vw; /* 16:9 aspect ratio math, so width always covers viewport width */
+  transform: translate(-50%, -50%) scale(1.15);
+  pointer-events: none;
+  border: none;
+}
+
+.hero-vignette-bottom {
+  background: linear-gradient(0deg, #08080a 0%, rgba(8, 8, 10, 0.75) 20%, rgba(8, 8, 10, 0.3) 50%, transparent 100%);
+}
+
+.hero-vignette-left {
+  background: linear-gradient(90deg, #08080a 0%, rgba(8, 8, 10, 0.65) 35%, rgba(8, 8, 10, 0.25) 70%, transparent 100%);
+}
+
+.hero-vignette-top {
+  background: linear-gradient(180deg, rgba(8, 8, 10, 0.75) 0%, rgba(8, 8, 10, 0.2) 40%, transparent 100%);
+}
+
+/* Combined Fallback Hero Overlay */
+.hero-gradient-overlay {
+  background: 
+    linear-gradient(0deg, #08080a 0%, rgba(8,8,10,0.7) 18%, rgba(8,8,10,0.2) 50%, transparent 100%),
+    linear-gradient(90deg, #08080a 0%, rgba(8,8,10,0.6) 40%, rgba(8,8,10,0.1) 80%, transparent 100%),
+    radial-gradient(circle at 80% 20%, transparent 40%, rgba(8,8,10,0.25) 100%);
+}
+
+/* Cinematic Ken-Burns Slow Background Zoom */
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.08) translate(-1%, -0.5%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+
+.kenburns-bg {
+  animation: kenburns 22s ease-in-out infinite alternate;
+}
+
+/* ==========================================
+ * SOPHISTICATED HERO ENTRANCE & PARALLAX SCROLL
+ * ========================================== */
+
+/* Hero Parallax Layers */
+.hero-parallax-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-parallax-bg {
+  will-change: transform, opacity, filter;
+  transition: transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.15s linear, filter 0.2s ease;
+}
+
+.hero-parallax-content {
+  will-change: transform, opacity, filter;
+  transition: transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.15s linear, filter 0.2s ease;
+}
+
+/* Cinematic Entrance Keyframes */
+@keyframes heroTitleCinematic {
+  0% {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateY(45px) scale(0.95);
+    letter-spacing: -0.04em;
+  }
+  60% {
+    filter: blur(3px);
+    transform: translateY(-4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+    letter-spacing: normal;
+  }
+}
+
+@keyframes heroEyebrowCinematic {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(-24px) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroMetaCinematic {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroDescCinematic {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroButtonsCinematic {
+  0% {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(32px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroControlsCinematic {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateX(35px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+  }
+}
+
+/* Staggered Entrance Utility Classes */
+.hero-enter-eyebrow {
+  animation: heroEyebrowCinematic 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.hero-enter-title {
+  animation: heroTitleCinematic 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+.hero-enter-meta {
+  animation: heroMetaCinematic 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+}
+
+.hero-enter-desc {
+  animation: heroDescCinematic 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+.hero-enter-buttons {
+  animation: heroButtonsCinematic 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.58s both;
+}
+
+.hero-enter-controls {
+  animation: heroControlsCinematic 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+}
+
+/* Hero Carousel Slide Fade Transition */
+@keyframes heroSlideFade {
+  0% { opacity: 0; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.hero-slide-enter {
+  animation: heroSlideFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Netflix Age Rating Bar on Hero Right Edge */
+.netflix-age-tag {
+  background: rgba(51, 51, 51, 0.6);
+  border-left: 3px solid #dcdcdc;
+  backdrop-filter: blur(8px);
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #e5e5e5;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================
+ * MOVIE POSTER CARDS & HOVER EFFECTS
+ * ========================================== */
+.movie-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 180px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: #121216;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  will-change: transform, box-shadow;
+}
+
+.movie-card:hover {
+  transform: translateY(-8px) scale(1.08);
+  z-index: 30;
+  border-color: rgba(229, 9, 20, 0.7);
+  box-shadow: 0 22px 40px -10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(229, 9, 20, 0.4);
+}
+
+.movie-card-overlay {
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(180deg, transparent 0%, rgba(8, 8, 10, 0.6) 35%, rgba(8, 8, 10, 0.98) 100%);
+}
+
+.movie-card:hover .movie-card-overlay {
+  opacity: 1;
+}
+
+/* Smart Video Preview inside card */
+.card-preview-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.movie-card:hover .card-preview-video {
+  opacity: 1;
+}
+
+/* ==========================================
+ * TOP 10 RANKING BADGES
+ * ========================================== */
+.top10-card {
+  margin-right: -65px;
+  position: relative;
+  display: block;       /* no more flex row */
+  flex-shrink: 0;
+  width: 200px;          /* card is basically poster-width now, adjust to taste */
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.top10-card:hover {
+  transform: translateY(-6px);
+}
+
+.top10-number {
+  position: absolute;
+  left: -12px;            /* small negative offset = "poking out a little" */
+  bottom: -12px;
+  font-size: 5rem;         /* much smaller than 7rem */
+  font-weight: 900;
+  line-height: 0.8;
+  color: #08080a;
+  -webkit-text-stroke: 3px #3f3f46;
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
+  z-index: 10;             /* sits on top of the poster image */
+  user-select: none;
+  transition: all 0.3s ease;
+  pointer-events: none;    /* so it doesn't block clicks on the card */
+}
+
+.top10-card:hover .top10-number {
+  -webkit-text-stroke: 3px #e50914;
+  color: rgba(229, 9, 20, 0.2);
+  transform: translateX(-2px) scale(1.05);
+}
+
+/* ==========================================
+ * MOODSYNC & INTERACTIVE PILLS
+ * ========================================== */
+.mood-pill {
+  background: rgba(24, 24, 27, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+  color: #d4d4d8;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mood-pill:hover {
+  background: rgba(39, 39, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.mood-pill.active {
+  background: linear-gradient(135deg, #e50914 0%, #b80710 100%);
+  border-color: #e50914;
+  color: #ffffff;
+  box-shadow: 0 8px 20px -4px rgba(229, 9, 20, 0.6);
+}
+
+/* Custom Row Scroll Navigation Buttons */
+.row-scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: rgba(18, 18, 22, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.row-container:hover .row-scroll-btn {
+  opacity: 1;
+}
+
+.row-scroll-btn:hover {
+  background: #e50914;
+  border-color: #e50914;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+}
+
+/* Watch Party & Live Chat Styling */
+.chat-bubble {
+  padding: 0.625rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  max-width: 85%;
+  word-break: break-word;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.chat-bubble-me {
+  background: #e50914;
+  color: #ffffff;
+  border-bottom-right-radius: 0.25rem;
+  margin-left: auto;
+}
+
+.chat-bubble-other {
+  background: rgba(39, 39, 42, 0.9);
+  color: #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom-left-radius: 0.25rem;
+  margin-right: auto;
+}
+
+/* AI Bot Drawer Styling */
+.bot-drawer {
+  background: rgba(18, 18, 22, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.8);
+}
+
+/* Regional Indian Cinema Selector Pills */
+.region-pill {
+  background: rgba(24, 24, 27, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.5rem 1.15rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #d4d4d8;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.region-pill:hover {
+  background: rgba(39, 39, 42, 0.95);
+  border-color: rgba(229, 9, 20, 0.5);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.region-pill.active {
+  background: linear-gradient(135deg, #e50914 0%, #b80710 100%);
+  border-color: #e50914;
+  color: #ffffff;
+  box-shadow: 0 8px 20px -4px rgba(229, 9, 20, 0.6);
+}
+
+/* Release Calendar Date Grid Card */
+.calendar-card {
+  background: rgba(24, 24, 27, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.calendar-card:hover {
+  border-color: rgba(229, 9, 20, 0.6);
+  background: rgba(39, 39, 42, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================
+ * COMPREHENSIVE MEDIA QUERIES
+ * ========================================== */
+
+
+/* Extra Small Devices (Smartphones <480px) */
+@media (max-width: 479px) {
+  #hero-banner {
+    min-height: 70vh !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .hero-title-text {
+    font-size: 2.25rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .movie-card {
+    width: 140px !important;
+  }
+
+  .top10-card {
+    width: 200px !important;
+  }
+
+  .top10-number {
+    font-size: 5rem !important;
+    margin-right: -1.25rem !important;
+  }
+
+  .hero-action-buttons {
+    flex-direction: column;
+    align-items: stretch !important;
+    width: 100%;
+  }
+
+  .hero-action-buttons button {
+    width: 100% !important;
+    justify-content: center;
+  }
+}
+
+/* Mobile Devices (480px - 639px) */
+@media (min-width: 480px) and (max-width: 639px) {
+  #hero-banner {
+    min-height: 75vh !important;
+  }
+
+  .hero-title-text {
+    font-size: 3rem !important;
+  }
+
+  .movie-card {
+    width: 155px !important;
+  }
+
+  .top10-card {
+    width: 220px !important;
+  }
+
+  .top10-number {
+    font-size: 6rem !important;
+  }
+}
+
+/* Tablets (640px - 1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  #hero-banner {
+    min-height: 80vh !important;
+  }
+
+  .hero-title-text {
+    font-size: 4.25rem !important;
+  }
+
+  .movie-card {
+    width: 190px !important;
+  }
+
+  .top10-card {
+    width: 260px !important;
+  }
+}
+
+/* Desktop Screens (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  #hero-banner {
+    min-height: 85vh !important;
+  }
+
+  .hero-title-text {
+    font-size: 5rem !important;
+  }
+
+  .movie-card {
+    width: 220px !important;
+  }
+
+  .top10-card {
+    width: 290px !important;
+  }
+}
+
+/* Large Screens & Ultra-Wide (>= 1440px) */
+@media (min-width: 1440px) {
+  #hero-banner {
+    min-height: 88vh !important;
+  }
+
+  .hero-title-text {
+    font-size: 5.75rem !important;
+  }
+
+  .movie-card {
+    width: 240px !important;
+  }
+
+  .top10-card {
+    width: 310px !important;
+  }
+
+  .top10-number {
+    font-size: 8rem !important;
+  }
+}

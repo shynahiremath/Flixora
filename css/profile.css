@@ -1,0 +1,126 @@
+/*
+ * FLIXORA - Profile Switcher, Subscription & Gamification Styles
+ */
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 3px solid transparent;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: #18181b;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 768px) {
+  .profile-avatar-container {
+    width: 145px;
+    height: 145px;
+  }
+}
+
+.profile-card:hover .profile-avatar-container {
+  border-color: #ffffff;
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.profile-card.active .profile-avatar-container {
+  border-color: #e50914;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(229, 9, 20, 0.8);
+}
+
+/* Subscription Plan Cards */
+.plan-card {
+  background: rgba(18, 18, 22, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-card:hover {
+  border-color: rgba(229, 9, 20, 0.6);
+  transform: translateY(-6px);
+  box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(229, 9, 20, 0.25);
+}
+
+.plan-card.popular {
+  border-color: #e50914;
+  background: radial-gradient(circle at 100% 0%, rgba(229, 9, 20, 0.25), rgba(18, 18, 22, 0.95));
+  box-shadow: 0 20px 40px rgba(229, 9, 20, 0.2);
+}
+
+/* Plan Ribbon Badge */
+.plan-ribbon {
+  position: absolute;
+  top: 1.25rem;
+  right: -2rem;
+  background: #e50914;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 2.5rem;
+  transform: rotate(45deg);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+}
+
+/* Gamified Achievement Badges */
+.badge-card {
+  background: rgba(24, 24, 27, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.badge-card:hover {
+  border-color: rgba(229, 9, 20, 0.5);
+  background: rgba(39, 39, 42, 0.9);
+  transform: translateY(-2px);
+}
+
+.badge-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: rgba(229, 9, 20, 0.15);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.2);
+}
+
+.badge-card.locked {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+.badge-card.locked .badge-icon-wrap {
+  background: rgba(63, 63, 70, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — Netflix</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/login.css" />
+</head>
+<body class="bg-zinc-950 text-white min-h-screen flex flex-col justify-between antialiased relative overflow-x-hidden">
+
+  <!-- Interactive 3D Parallax Background Mesh -->
+  <div id="auth-bg-mesh" class="auth-mesh-layer"></div>
+
+  <!-- Header -->
+  <header class="p-6 md:px-12 flex items-center justify-between z-10 auth-header-animate">
+    <a href="/index.html" class="text-3xl font-black tracking-wider text-red-600 font-mono hover:scale-105 transition duration-300">NETFLIX</a>
+
+    <div class="flex items-center gap-3">
+      <!-- Language Switcher Dropdown -->
+      <div class="relative">
+        <button onclick="toggleLangMenu()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-xs font-bold transition cursor-pointer" title="Switch Language">
+          <span>🌐</span>
+          <span id="current-lang-label">English</span>
+          <span class="text-[10px] text-zinc-400">▼</span>
+        </button>
+        <div id="lang-dropdown-menu" class="hidden absolute right-0 mt-2 w-40 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-2 z-50 animate-fade-in text-xs font-bold space-y-1">
+          <button onclick="setAppLanguage('en')" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-zinc-800 text-zinc-200 transition cursor-pointer">
+            <span>English</span>
+            <span id="check-lang-en" class="text-red-500">✓</span>
+          </button>
+          <button onclick="setAppLanguage('hi')" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-zinc-800 text-zinc-200 transition cursor-pointer">
+            <span>हिंदी (Hindi)</span>
+            <span id="check-lang-hi" class="text-red-500 hidden">✓</span>
+          </button>
+        </div>
+      </div>
+      <a href="/signup.html" class="text-xs font-bold text-zinc-300 hover:text-white uppercase tracking-wider">Sign Up</a>
+    </div>
+  </header>
+
+  <!-- Login Main Container -->
+  <main class="flex-grow flex items-center justify-center p-4 relative z-10">
+    <div id="auth-interactive-card" class="auth-card p-8 md:p-10 my-8">
+      <h1 class="text-3xl font-black text-white mb-6 auth-field-1" data-i18n="signin_title">Sign In</h1>
+
+      <div id="login-error" class="hidden p-3.5 rounded-xl bg-red-950/80 border border-red-600/60 text-red-200 text-xs font-semibold mb-4 animate-fade-in"></div>
+
+      <form id="login-form" class="space-y-5">
+        <div class="auth-field-2">
+          <label class="block text-xs font-bold text-zinc-300 uppercase tracking-wider mb-2" data-i18n="signin_email_label">Email or Phone Number</label>
+          <input type="email" id="login-email" required placeholder="name@example.com" class="auth-input" />
+        </div>
+
+        <div class="auth-field-3">
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-xs font-bold text-zinc-300 uppercase tracking-wider" data-i18n="signin_password_label">Password</label>
+            <button type="button" id="forgot-password-link" class="text-xs text-zinc-400 hover:text-white transition" data-i18n="signin_forgot">Forgot password?</button>
+          </div>
+          <div class="relative">
+            <input type="password" id="login-password" required placeholder="••••••••" class="auth-input pr-16" />
+            <button type="button" class="toggle-password-btn absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-wider">SHOW</button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs text-zinc-400 auth-field-4">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked class="w-4 h-4 accent-red-600 rounded cursor-pointer" />
+            <span data-i18n="signin_remember">Remember me</span>
+          </label>
+          <a href="#" class="hover:underline text-zinc-400">Need help?</a>
+        </div>
+
+        <div class="auth-field-5">
+          <button type="submit" id="login-submit-btn" class="auth-btn cursor-pointer" data-i18n="signin_btn">
+            Sign In
+          </button>
+        </div>
+      </form>
+
+      <!-- Social Login Buttons -->
+      <div class="mt-6 pt-6 border-t border-zinc-800 space-y-3 auth-field-6">
+        <p class="text-center text-xs text-zinc-500 font-semibold uppercase tracking-wider">Or continue with</p>
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" onclick="showToast('Google Sign-In simulated', 'info')" class="social-btn">
+            <span>🌐</span> Google
+          </button>
+          <button type="button" onclick="showToast('GitHub Sign-In simulated', 'info')" class="social-btn">
+            <span>💻</span> GitHub
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-8 text-xs text-zinc-400 text-center auth-field-6">
+        New to Netflix? <a href="/signup.html" class="text-white font-bold hover:underline">Sign up now</a>.
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="p-6 text-center text-xs text-zinc-600 border-t border-zinc-900">
+    <p>© 2026 Netflix — Educational Frontend Demo</p>
+  </footer>
+
+  <!-- auth.js MUST load before login.js — login.js calls Auth.saveSession() -->
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

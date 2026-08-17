@@ -1,0 +1,210 @@
+/*
+ * FLIXORA - Authentication UI Styles (Login / Signup)
+ * Features Staggered Blur-Reveal Entrances & 3D Parallax Tilt Effects
+ */
+
+@keyframes meshGradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Auth Card Entrance Keyframes */
+@keyframes authCardEntrance {
+  0% {
+    opacity: 0;
+    filter: blur(20px);
+    transform: perspective(1000px) translateY(40px) scale(0.92) rotateX(10deg);
+  }
+  60% {
+    filter: blur(4px);
+    transform: perspective(1000px) translateY(-5px) scale(1.01) rotateX(-2deg);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: perspective(1000px) translateY(0) scale(1) rotateX(0deg);
+  }
+}
+
+@keyframes authHeaderEntrance {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes authFieldEntrance {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(24px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Auth Page Body & Mesh Background Layer */
+.auth-mesh-layer {
+  position: fixed;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 50% 20%, rgba(229, 9, 20, 0.3), transparent 55%),
+                    radial-gradient(circle at 85% 75%, rgba(147, 51, 234, 0.2), transparent 50%),
+                    radial-gradient(circle at 15% 85%, rgba(229, 9, 20, 0.15), transparent 45%),
+                    linear-gradient(to bottom, rgba(8, 8, 10, 0.65), rgba(8, 8, 10, 0.98)),
+                    url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  transition: transform 0.12s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.auth-header-animate {
+  animation: authHeaderEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.auth-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 460px;
+  background: rgba(18, 18, 22, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(229, 9, 20, 0.18);
+  will-change: transform, box-shadow, filter;
+  transform-style: preserve-3d;
+  transition: transform 0.15s cubic-bezier(0.1, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  animation: authCardEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.auth-card:hover {
+  border-color: rgba(229, 9, 20, 0.5);
+  box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.95), 0 0 50px rgba(229, 9, 20, 0.3);
+}
+
+/* Staggered Field Entrance Delays */
+.auth-field-1 {
+  animation: authFieldEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.auth-field-2 {
+  animation: authFieldEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+}
+
+.auth-field-3 {
+  animation: authFieldEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.54s both;
+}
+
+.auth-field-4 {
+  animation: authFieldEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.66s both;
+}
+
+.auth-field-5 {
+  animation: authFieldEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.78s both;
+}
+
+.auth-field-6 {
+  animation: authFieldEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+}
+
+.auth-input-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.auth-input {
+  width: 100%;
+  background: rgba(24, 24, 27, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.875rem;
+  padding: 0.95rem 1.15rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #e50914;
+  background: rgba(39, 39, 42, 0.95);
+  box-shadow: 0 0 0 4px rgba(229, 9, 20, 0.25), 0 10px 25px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.auth-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #e50914 0%, #b80710 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.95rem;
+  border-radius: 0.875rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 12px 25px -5px rgba(229, 9, 20, 0.5);
+  cursor: pointer;
+  border: none;
+}
+
+.auth-btn:hover {
+  background: linear-gradient(135deg, #f40a16 0%, #c90812 100%);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 18px 35px -5px rgba(229, 9, 20, 0.7);
+}
+
+.social-btn {
+  width: 100%;
+  background: rgba(39, 39, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.875rem;
+  padding: 0.85rem 1rem;
+  color: #e4e4e7;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.social-btn:hover {
+  background: rgba(63, 63, 70, 0.95);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Media Queries for Auth */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 1.25rem;
+  }
+
+  .auth-btn {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+  }
+}
+

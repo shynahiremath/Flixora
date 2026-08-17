@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account & Settings — Netflix Streaming</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/browse.css" />
+  <link rel="stylesheet" href="/css/profile.css" />
+</head>
+<body class="bg-zinc-950 text-white min-h-screen flex flex-col antialiased selection:bg-red-600 selection:text-white">
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-50 glass-nav border-b border-zinc-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-8">
+        <a href="/browse/home.html" class="text-2xl sm:text-3xl font-black tracking-wider text-red-600 font-mono">NETFLIX</a>
+        <div class="hidden md:flex items-center gap-6 text-xs font-bold text-zinc-300 uppercase tracking-wider">
+          <a href="/browse/home.html" class="hover:text-white transition">Home</a>
+          <a href="/browse/search.html" class="hover:text-white transition">Search</a>
+          <a href="/browse/mylist.html" class="hover:text-white transition">My List</a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="openMobileHandoffModal()" class="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 text-xs font-bold transition cursor-pointer">
+          📱 Mobile Sync
+        </button>
+        <a href="/browse/home.html" class="text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-wider">Done</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN PROFILE & SETTINGS CONTENT -->
+  <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 py-10 w-full space-y-12">
+    
+    <!-- Header Title -->
+    <div>
+      <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight">Manage Profiles & Account</h1>
+      <p class="text-xs text-zinc-400 mt-2">Manage profiles, subscription plans, video playback preferences, and stats.</p>
+    </div>
+
+    <!-- 1. PROFILES SELECTION GRID -->
+    <section class="p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+      <h2 class="text-xl font-bold text-white mb-6 tracking-tight">Who's Watching?</h2>
+      <div id="profiles-grid" class="flex flex-wrap items-center gap-8">
+        <!-- Rendered in profile.js -->
+      </div>
+    </section>
+
+    <!-- 2. WATCH STATS & UNLOCKED ACHIEVEMENTS -->
+    <section class="p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+      <h2 class="text-xl font-bold text-white mb-6 tracking-tight">Streaming Analytics & Achievements</h2>
+      <div id="stats-achievements-container">
+        <!-- Rendered in profile.js -->
+      </div>
+    </section>
+
+    <!-- 3. ACCENT THEME SELECTOR -->
+    <section class="p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+      <div id="accent-theme-container">
+        <!-- Rendered in profile.js -->
+      </div>
+    </section>
+
+    <!-- 4. SUBSCRIPTION MEMBERSHIP SIMULATION -->
+    <section class="p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-white tracking-tight">Membership & Streaming Tiers</h2>
+          <p class="text-xs text-zinc-400">Upgrade or switch your streaming resolution tier.</p>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+          ● Premium Membership Active
+        </span>
+      </div>
+
+      <div id="subscription-plan-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Rendered in profile.js -->
+      </div>
+    </section>
+
+    <!-- 5. PLAYBACK SETTINGS & PREFERENCES -->
+    <section class="p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-6">
+      <h2 class="text-xl font-bold text-white tracking-tight">Playback Settings & Preferences</h2>
+
+      <form id="settings-preferences-form" class="space-y-6 text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" id="pref-autoplay-previews" class="w-5 h-5 accent-red-600 rounded cursor-pointer" />
+              <div>
+                <span class="block font-semibold text-white">Autoplay Previews</span>
+                <span class="text-xs text-zinc-400">Play video previews while browsing cards.</span>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" id="pref-autoplay-next" class="w-5 h-5 accent-red-600 rounded cursor-pointer" />
+              <div>
+                <span class="block font-semibold text-white">Autoplay Next Episode</span>
+                <span class="text-xs text-zinc-400">Automatically play the next episode in a series.</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-zinc-300 uppercase tracking-wider mb-2">Preferred Video Quality</label>
+              <select id="pref-quality" class="w-full bg-zinc-800 text-xs text-zinc-200 px-4 py-3 rounded-xl border border-zinc-700 focus:outline-none">
+                <option value="Auto (4K)">Auto (Best Quality - Up to 4K HDR)</option>
+                <option value="High (1080p)">High (1080p Full HD)</option>
+                <option value="Standard (720p)">Standard (720p HD)</option>
+                <option value="Data Saver">Data Saver</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-zinc-300 uppercase tracking-wider mb-2">Primary Audio & Subtitle Language</label>
+              <select id="pref-language" class="w-full bg-zinc-800 text-xs text-zinc-200 px-4 py-3 rounded-xl border border-zinc-700 focus:outline-none">
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Kannada">Kannada</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Malayalam">Malayalam</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Japanese">Japanese</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-zinc-800 flex justify-end">
+          <button type="submit" class="px-8 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-red-600/30 cursor-pointer">
+            Save Preferences
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 6. ACCOUNT SECURITY & SIGN OUT -->
+    <section class="p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <h3 class="text-lg font-bold text-white">Account Security</h3>
+        <p class="text-xs text-zinc-400">Signed in as <strong id="account-email-display" class="text-zinc-200">...</strong></p>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button onclick="showToast('Password change simulation initiated', 'info')" class="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs border border-zinc-700 transition cursor-pointer">
+          Change Password
+        </button>
+
+        <button id="profile-signout-btn" class="px-6 py-2.5 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white font-bold text-xs uppercase tracking-wider border border-red-500/40 transition cursor-pointer">
+          Sign Out
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-zinc-950 border-t border-zinc-900 py-8 text-center text-zinc-500 text-xs">
+    <p>© 2026 Netflix — Educational Portfolio Project</p>
+  </footer>
+
+  <!-- auth.js MUST load first: it checks the JWT with the backend
+       before the page's real content logic (profile.js) runs -->
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/profile.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Real backend-verified auth check (replaces old AppState.getCurrentUser())
+      const user = await Auth.requireAuth();
+      if (!user) return; // Auth.requireAuth() already redirected to /login.html
+
+      const display = document.getElementById("account-email-display");
+      if (display) display.textContent = user.email;
+
+      // Wire the real Sign Out button on this page (different id than the navbar's)
+      const signoutBtn = document.getElementById("profile-signout-btn");
+      if (signoutBtn) {
+        signoutBtn.addEventListener("click", () => Auth.logout());
+      }
+    });
+  </script>
+</body>
+</html>
