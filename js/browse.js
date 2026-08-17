@@ -17,9 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupTimeBasedFilter();
   setupGenreExplorer();
   setupIndianCinemaHub();
-  renderHiddenGemsSection();
   renderComingSoonSection();
-  renderLanguagePillsSection();
   renderKidsSection();
   renderAllCategoryRows();
 
@@ -834,8 +832,6 @@ function renderAllCategoryRows() {
   const categories = [
     { title: "Trending Right Now 🔥", filter: m => m.isTrending },
     { title: "Popular Blockbusters", filter: m => m.isPopular },
-    { title: "Sci-Fi & Cyberpunk", filter: m => m.genres.includes("Sci-Fi") },
-    { title: "High-Octane Action", filter: m => m.genres.includes("Action") },
     { title: "Award Winners & Masterpieces", filter: m => m.isAwardWinner }
   ];
 
