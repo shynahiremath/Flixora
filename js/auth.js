@@ -7,7 +7,7 @@
  * and BEFORE login.js on login.html / signup.html.
  */
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = `${window.API_BASE_URL}/api`;
 
 const Auth = {
   getToken() {
