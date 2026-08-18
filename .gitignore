@@ -1,26 +1,5 @@
-# Dependencies
 node_modules/
-backend/node_modules/
-
-# Environment variables (NEVER commit secrets)
 .env
+backend/node_modules/
 backend/.env
-*.env
-.env.local
-.env.production
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Editor
-.vscode/*
-!.vscode/settings.json
-
-# Logs
-*.log
-npm-debug.log*
-
-# Build output (if any bundler is used later)
-dist/
-build/
+.vercel
